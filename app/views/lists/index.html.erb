@@ -13,10 +13,11 @@
 </div>
 <div class="container">
   <div class="cards">
-    <% @lists.each_with_index do |list, index| %>
+    <% @lists.each do |list| %>
       <%= link_to list_path(list), class: "text-decoration-none text-white" do %>
         <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
-          url(<%= asset_path("list_#{index + 1}.jpg") %>)">
+          url(<%= list.photo.attached? ? cl_image_path(list.photo.key) : asset_path("list_1.jpg") %>)"
+          >
           <%= list.name %>
         </div>
       <% end %>
