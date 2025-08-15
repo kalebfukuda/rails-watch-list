@@ -6,7 +6,9 @@ class BookmarksController < ApplicationController
     if @bookmark.save
       redirect_to list_path(@bookmark.list)
     else
-      @show_modal = true
+      @show_modal_bookmark = true
+      @review = Review.new
+      @reviews = Review.all
       render 'lists/show', status: :unprocessable_content
     end
   end

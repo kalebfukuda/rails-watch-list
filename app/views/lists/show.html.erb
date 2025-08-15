@@ -10,10 +10,16 @@
     Add Bookmark!
   </button>
   <% unless @list.bookmarks.size.zero? %>
+    <button type="button" class="btn btn-cine mb-3" data-bs-toggle="modal" data-bs-target="#addReview">
+      <i class="fa-solid fa-plus"></i>
+      Add review!
+    </button>
+  <% end %>
+  <% unless @list.bookmarks.size.zero? %>
     <div class="cards mb-4">
       <% @list.bookmarks.each do |bookmark| %>
-        <div class="bg-white shadow-sm rounded card-position">
-          <div class="card-category rounded" style="background-image: linear-gradient(rgba(0,0,0,0.3),
+        <div class="bg-white shadow-sm form-border card-position">
+          <div class="card-category card-img-border-radius" style="background-image: linear-gradient(rgba(0,0,0,0.3),
           rgba(0,0,0,0.3)), url(<%= asset_url(bookmark.movie.poster_url) %>)">
             <%= link_to bookmark_path(bookmark), class: "card-delete",
             data: { turbo_method: :delete, turbo_confirm: "Remove #{bookmark.movie.title}?"} do  %>
@@ -39,28 +45,67 @@
         </div>
       <% end %>
     </div>
+    <% unless @reviews.size.zero?  %>
+      <div class="bg-white container mb-4 p-4 form-border ">
+        <h2>Reviews</h2>
+        <div class="row">
+          <% @reviews.each do |review| %>
+            <div class="col-3">
+              <div class="d-flex p-3">
+                <div class="vr mb-3">
+                </div>
+                <div class="ms-2">
+                  <% 5.times do |i| %>
+                    <i class="fa-solid fa-star <%= i < review.rating ? 'text-cine' : 'text-black' %> "></i>
+                  <% end %>
+                  <p><%= review.comment %></p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   <% else %>
     <div class="col-12">
       <%= image_tag "empty-box.png", alt: "text", style: "display:table;margin:auto;" %>
     </div>
   <% end %>
-</div>
-<div id="addBookmark" class="modal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">New Bookmark!</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <%= render 'bookmarks/form', bookmark:@bookmark %>
+  <div id="addBookmark" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">New Bookmark!</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= render 'bookmarks/form', bookmark:@bookmark %>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<% if @show_modal %>
-  <script>
-    var myModal = new bootstrap.Modal(document.getElementById('addBookmark'));
-    myModal.show();
-  </script>
-<% end %>
+  <div id="addReview" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">New Review!</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= render 'reviews/form', review:@review %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% if @show_modal_bookmark %>
+    <script>
+      var myModal = new bootstrap.Modal(document.getElementById('addBookmark'));
+      myModal.show();
+    </script>
+  <% end %>
+  <% if @show_modal_review %>
+    <script>
+      var myModal = new bootstrap.Modal(document.getElementById('addReview'));
+      myModal.show();
+    </script>
+  <% end %>
