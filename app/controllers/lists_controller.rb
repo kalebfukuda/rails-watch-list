@@ -14,8 +14,8 @@ class ListsController < ApplicationController
     if @list.save
       redirect_to list_path(@list)
     else
-      # redirect_to lists_path, status: :unprocessable_content
       @lists = List.all
+      @show_modal = true
       render :index, status: :unprocessable_entity
     end
   end

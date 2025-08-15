@@ -1,19 +1,14 @@
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),
+  url(<%= @list.photo.attached? ? cl_image_path(@list.photo.key) : asset_path("list_1.jpg") %>);">
+  <div class="container text-center justify-content-center">
+    <p class="t-size"> <%= @list.name %></p>
+  </div>
+</div>
 <div class="container">
-  <div onclick="document.getElementById('bookmarkId').classList.toggle('display-div')"
-    style="width:fit-content;cursor:pointer;text-align:center;align-items:center;"
-    class="d-flex">
-    <h1 class="me-2 text-cine"> <%= @list.name %></h1>
-    <i class="fa-solid fa-circle-plus text-cine h3"></i>
-  </div>
-  <div id="bookmarkId"
-    class="display-div"
-    >
-    <div class="container">
-      <div class="d-flex col-5 shadow-sm p-4 mb-4 justify-content-center bg-form form-border">
-        <%= render 'bookmarks/form', bookmark:@bookmark %>
-      </div>
-    </div>
-  </div>
+  <button type="button" class="btn btn-cine mb-3" data-bs-toggle="modal" data-bs-target="#addBookmark">
+    <i class="fa-solid fa-plus"></i>
+    Add Bookmark!
+  </button>
   <% unless @list.bookmarks.size.zero? %>
     <div class="cards mb-4">
       <% @list.bookmarks.each do |bookmark| %>
@@ -45,6 +40,27 @@
       <% end %>
     </div>
   <% else %>
-    <%= image_tag "empty-box.png", alt: "text", style: "display:table;margin:auto;" %>
+    <div class="col-12">
+      <%= image_tag "empty-box.png", alt: "text", style: "display:table;margin:auto;" %>
+    </div>
   <% end %>
 </div>
+<div id="addBookmark" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New Bookmark!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= render 'bookmarks/form', bookmark:@bookmark %>
+      </div>
+    </div>
+  </div>
+</div>
+<% if @show_modal %>
+  <script>
+    var myModal = new bootstrap.Modal(document.getElementById('addBookmark'));
+    myModal.show();
+  </script>
+<% end %>

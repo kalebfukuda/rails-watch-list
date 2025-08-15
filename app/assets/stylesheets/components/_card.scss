@@ -40,6 +40,10 @@
   right: 5px;
 }
 
+.font-size {
+  font-size: 5rem;
+}
+
 // Smallest device
 @media (min-width: 100px) and (max-width: 575px) {
   .cards {

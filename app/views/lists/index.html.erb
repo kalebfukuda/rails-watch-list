@@ -2,12 +2,8 @@
   <div class="container">
     <h1>Prepare for the movie time!</h1>
     <div class="btn btn-primary"
-      onclick="document.getElementById('newListId').classList.toggle('display-div')">
+      data-bs-toggle="modal" data-bs-target="#newListModal">
       Create Your WatchList!
-    </div>
-    <div id="newListId"
-      class="d-flex col-3 shadow-sm p-2 mb-4 justify-content-center bg-form form-border <%= 'display-div' unless @list.errors.any? %>">
-      <%= render 'lists/form', list:@list %>
     </div>
   </div>
 </div>
@@ -24,3 +20,22 @@
     <% end %>
   </div>
 </div>
+<div id="newListModal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New List</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= render 'lists/form', list:@list %>
+      </div>
+    </div>
+  </div>
+</div>
+<% if @show_modal %>
+  <script>
+    var myModal = new bootstrap.Modal(document.getElementById('newListModal'));
+    myModal.show();
+  </script>
+<% end %>

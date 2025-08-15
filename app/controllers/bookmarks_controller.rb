@@ -6,15 +6,15 @@ class BookmarksController < ApplicationController
     if @bookmark.save
       redirect_to list_path(@bookmark.list)
     else
-      redirect_to new_list_bookmark_path, status: :unprocessable_content
+      @show_modal = true
+      render 'lists/show', status: :unprocessable_content
     end
   end
 
   def destroy
     @bookmark = Bookmark.find(params[:id])
     @bookmark.destroy
-
-    redirect_to list_path(@bookmark)
+    redirect_to list_path(@bookmark.list)
   end
 
   private
