@@ -1,0 +1,25 @@
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(<%= asset_path("banner.jpg")%>);">
+  <div class="container">
+    <h1>Prepare for the movie time!</h1>
+    <div class="btn btn-primary"
+      onclick="document.getElementById('newListId').classList.toggle('display-div')">
+      Create Your WatchList!
+    </div>
+    <div id="newListId"
+      class="d-flex col-3 shadow-sm p-2 mb-4 justify-content-center bg-form form-border <%= 'display-div' unless @list.errors.any? %>">
+      <%= render 'lists/form', list:@list %>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="cards">
+    <% @lists.each_with_index do |list, index| %>
+      <%= link_to list_path(list), class: "text-decoration-none text-white" do %>
+        <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+          url(<%= asset_path("list_#{index + 1}.jpg") %>)">
+          <%= list.name %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
